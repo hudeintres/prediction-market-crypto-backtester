@@ -1,0 +1,2 @@
+backtest_start,backtest_end,initial_capital,data_mode,total_return_pct,annualized_return_pct,sharpe_ratio,max_drawdown_pct,win_rate,total_trades,opportunities_found
+2023-06-01,2024-12-31,10000.0,real,5534.980649444508,3489.236506126503,39.293174662044386,-40.47500112466028,100.0,24,24
