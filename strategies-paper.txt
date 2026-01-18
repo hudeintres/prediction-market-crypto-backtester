@@ -1,0 +1,454 @@
+
+Derivative Arbitrage Strategies in Cryptocurrency Markets
+
+Augustin Valery
+
+
+
+
+
+Abstract
+Cryptocurrency derivatives markets exhibit numerous pricing inconsistencies. This paper examines an approach that leverages price divergences between inverse vanilla options and binary options from prediction markets. It posits that, under certain conditions, the combination of these two instruments enables the construction of a portfolio with a negative-free payoff at expiration. To validate this hypothesis, we derive the unified condition required for constructing such a portfolio and establish the theoretical framework for its formation. Subsequently, to evaluate the practical relevance of this arbitrage, we define a trading strategy based on this framework and test it on Bitcoin and Ether markets. The results indicate that, although arbitrage opportunities are infrequent, the strategy remains highly profitable. Furthermore, none of the trades executed yield a negative return at expiration, thereby validating our initial assumption. Overall, this paper contributes to the study of arbitrage in cryptocurrency markets. On the one hand, it proposes the theoretical foundation for a novel vanilla-binary option arbitrage strategy. On the other, it provides a benchmark for pricing prediction market binary options.
+
+JEL Classification: G11, G12, G15
+Keywords: Cryptocurrencies, Arbitrage, Inverse options, Binary options, Pricing
+
+
+1. Introduction
+
+     Cryptocurrency markets are very recent compared to traditional asset classes. They are distinguished by their instability and rapid evolution, making them more prone to deviations and inefficiencies, most of which are temporary, some of which are inherent. Although this is reflected across several dimensions, the first expression of these characteristics lies in the pricing of assets and derivatives. While the law of one price states that two portfolios with the same payoff must have similar prices,1 the price dynamics of cryptocurrencies contradict the latter. This phenomenon creates arbitrage opportunities of varying magnitude and frequency, which are specifically designed to generate returns by exploiting these pricing inconsistencies.
+     Historically, arbitrage has played an important role in cryptocurrency markets. It helps to reduce price divergences and participates in attracting traditional institutions. Because these markets are not based on intermediaries such as brokers or clearing firms, margins are even more attractive. In fact, in recent years, institutions such as Jane Street, Millennium or Jump have taken advantage of these many opportunities. Like the participants, the strategies have also evolved over time. Since 2014, the most common form has been cross-exchanges spread arbitrage. It can involve two or more pairs, and takes advantage of the price differentials between the same asset across multiple trading venues. In this context, the "Kimchi Premium" notably left its mark and captured attention. This trade involved buying Bitcoin on one of the main exchanges, such as Coinbase or Binance, in order to sell them on South Korean exchanges where the price was 20 to 30% higher. At its highest, the premium captured by this strategy reached 50%. The infamous hedge fund Alameda Research massively exploited these opportunities to produce consistent returns, as did the over-the-counter (OTC) firm Genesis Trading. From 2017 and the introduction of Bitcoin and Ether futures contracts on the Chicago Mercantile Exchange (CME), the traditional cash-and-carry trade strategy has also experienced rapid expansion in the cryptocurrency market. Its low carrying costs still make it very profitable today, as shown by the recent performance of the trading company QCP, which generated a return of 20.7% in 2024.2 This strategy is also related to perpetual futures arbitrage, which involves taking advantage of the funding rate while neutralizing exposure to price variations of the underlying asset. With the rise of decentralized finance in 2021, a completely new range of arbitrage opportunities emerged, primarily driven by the lack of liquidity in decentralized
+
+1 For further reference, see e.g. Kroeger and Sarkar (2017).
+2 According to Schmeling, Schrimpf and Todorov (2023), the future-spot deviation can reach 60% during periods of high volatility.
+
+protocols. For instance, firms such as Wintermute or GSR have significantly exploited yield arbitrage, which involves capitalizing on yield discrepancies between various lending platforms like Aave or Compound. More broadly, decentralized finance is rife with such opportunities, stemming from the need for protocols to incentivize investors to keep their capital on the platform, especially after the launch of their native cryptocurrencies.
+     The arbitrage strategy presented in this paper leverages two types of instruments that are distinct in form but similar in substance. The first leg involves vanilla options, while the second utilizes prediction market binary options. Vanilla options are the most common option type in the cryptocurrency market. They have gained significant importance since their introduction on the Chicago Mercantile Exchange in January 2020. Based on the underlying's futures contract with the same expiry date, these options have enabled institutional investors to hedge against the inherent volatility of this asset class, while allowing retail investors to speculate with minimal capital commitment. The combination of a diverse range of investor profiles using this type of instrument has also fostered the emergence of arbitrage opportunities. Alexander, Chen, Deng and Wang (2024) employed box spread and put-call parity tests to demonstrate this fact. Their findings show that, despite improvements in the efficiency of the cryptocurrency options market in recent years, highly profitable arbitrage opportunities still exist.
+     Prediction markets have existed for many years, but have gained significant popularity since the beginning of 2024 with the rapid growth of Polymarket, a leading actor in this sector. They are markets where investors can bet on the outcome of any event. Unlike traditional betting platforms, the probabilities are not set by a centralized institution but rather by the supply and demand of each outcome, represented by shares. Typically, a market is composed of a closed question with two possible outcomes, often "yes" or "no." For instance, it could be "Will the price of Bitcoin be above $97,000 on December 27, 2024?" Investors can then buy and sell shares representing the outcome they believe to be correct. The price of the shares ranges between $0 and $1, determined by the number of shares in circulation. The lower the probability of an outcome, as defined by investors, the lower the price of the associated shares. Once the market's expiration date is reached, the shares corresponding to the correct outcome are worth $1 each, while the others have a value of zero. For markets based on the price of an asset, the shares are considered to be binary options, as they have a constant value when the underlying is below a certain price and another constant value when it is above that price.3
+
+3 A comprehensive presentation of the economic mechanisms underlying the various forms of prediction markets has been provided by Režábek (2024).
+
+     In this paper, we suggest that combining vanilla and binary options sometimes enables the structuring of a portfolio with a negative-free payoff at expiration. This assumption arises from the low level of standardization of option pricing among non-institutional investors, as well as the unique pricing mechanism of prediction market binary options. To verify this hypothesis, we derive the conditions for the formation of a negative-free payoff using these two instruments. Then, we build a relatively basic strategy that opens a position when such an opportunity appears and holds it until expiry. To validate its effectiveness, we test it empirically on Bitcoin and Ether markets. We find that this strategy generates respective returns per trade of 22.7% and 18.8%. Most importantly, none of the positions taken during the observed period result in a loss. Also, we note that the frequency of these arbitrage opportunities is relatively low, primarily due to the lack of option supply in prediction markets. However, the solid performance of our strategy, based on the condition for forming a portfolio with a negative-free payoff, underscores its theoretical and practical value for pricing prediction market binary options.
+     The existing literature on options in cryptocurrency markets primarily focuses on pricing models and stochastic volatility. See e.g. Cretarola, Figà-Talamanca and Patacca (2019), Hou, Wang, Chen and Härdle (2020), Hu, Rachev and Fabozzi (2021), and Zulfiqar and Gulzar (2021). Alexander, Chen, Deng and Wang (2024) propose a methodology for evaluating the efficiency of Bitcoin and Ether options markets. They determine a no-arbitrage price formula for a box spread setup and test the economic magnitude of an arbitrage strategy based on this. They find that despite improvements in the efficiency of cryptocurrency option markets, arbitrage strategies can still be performant, particularly during periods of high volatility. Our paper proposes a condition for constructing a negative-free payoff in the joint market of crypto vanilla options and prediction market binary options. Thus, it provides an illustration of their findings applied to related instruments. This paper is also connected to the literature on prediction market binary options. Notably, Wolfers and Zitzewitz (2006) demonstrate that the price of binary options, while relatively accurately reflecting the probabilities implied by traders, may incorporate biases that distort their pricing. Our paper extends this line of research by showing that divergences in implied probabilities-and thus in pricing-between vanilla and binary options lead to arbitrage opportunities. More generally, our paper contributes to the study of arbitrage in cryptocurrency markets. Makarov and Schoar (2020) examine price deviations across exchanges and illustrate the impact of geographic, economic, and regulatory factors. They highlight arbitrage opportunities arising from these pricing differences. Their findings were recently confirmed by John, Li, and Liu (2024) who study the pricing of several
+
+cryptocurrencies across 80 exchanges. They find that, even recently, the spread between exchanges for Bitcoin has reached two-digit percentage points, especially on decentralized exchanges. Our analysis focuses on pricing inconsistencies between vanilla and binary options. Similar to these two articles, we find that such inconsistencies exist even in liquid cryptocurrency derivatives like Bitcoin and Ether options, and that they allow us to construct an arbitrage strategy that delivers solid performance while limiting the risk.
+     This paper is organized as follows. Section 2 introduces the foundational principles of cryptocurrency inverse vanilla options and prediction market binary options, highlighting their individual payoffs and distinctive features. Section 3 develops a thesis on the possibility of structuring a portfolio with a negative-free payoff by combining these two instruments, and derives the arbitrage condition. Section 4 introduces the source and method for data processing, including the calculation of the delta of vanilla options. Section 5 presents the construction of the vanilla-binary arbitrage strategy and tests its empirical performance. We also discuss the determining factors of the success of this arbitrage. Finally, Section 6 concludes.
+
+
+2. Fundamentals of Inverse and Binary Options
+
+     In this section, we introduce inverse cryptocurrency options, as well as prediction market binary options. We begin by contextualizing the use of these two instruments and discussing their unique characteristics. Then, we present their economic rationale and payoff. Finally, we introduce the concepts that link vanilla and binary options, particularly those applicable in constructing an arbitrage strategy.
+
+2.1. Introduction to Inverse Options and Prediction Markets
+
+     Options have gained significant traction in the cryptocurrency market for two main reasons. First, they allow institutional investors to hedge against the substantial volatility of cryptocurrencies. This ability to manage risk is critical, as it facilitates the entry of institutional capital and infrastructure into the industry. Second, they have become an essential tool for retail investors engaging in speculation. Specifically, Alexander, Dang, Feng, and Wan (2023) found that Bitcoin options are key in the construction of informed trading strategies. For example, market maker Wintermute has achieved strong profit by offering market-making services in
+
+exchange for call options.4 These features make options not only well-suited but arguably
+essential for cryptocurrency markets. Reflecting this trend, the trading volume of crypto options has experienced strong growth since 2021, with the average monthly volume increasing from approximately $20 billion to $60 billion by 2024. Most of this trading volume occurs on Deribit exchange, which is the leading options trading platform for both institutional and retail investors. Currently, it accounts for 85% of the total option volume, ahead of OKX and Binance.5 As such, we take this platform as a reference throughout this paper.
+     We now detail the specifics of Bitcoin and Ether options contracts traded on Deribit. These contracts are vanilla European-style options that expire at 08:00 UTC on the designated expiration date. They are cash-settled, meaning that at expiry, the writer of the contract pays the intrinsic value of the option to the holder, without delivering the underlying asset. The settlement is done in units of the underlying asset rather than in dollars, which accounts for the term "inverse option." This terminology stems from the inverse relationship between the price of the underlying asset and its dollar-denominated value. We will further explore this concept when examining the payoff structure of Deribit options in the next subsection. Lastly, unlike traditional options, each contract grants the right to buy only a single unit of the underlying asset. This particular feature must be carefully considered when defining our condition in Section 3.
+     Next, we focus on prediction market options. Similarly to inverse options, prediction markets have witnessed rapid adoption in recent years. However, a key distinction lies in the fact that prediction markets are generally not classified as financial instruments, but rather as betting platforms, which is the context in which they have gained significant recognition in the cryptocurrency market. As early as 2001, Berg, Forsythe, Nelson and Rietz (2001) examined the dynamics of these markets through the lens of the Iowa Electronic Markets. In the cryptocurrency industry, it is through the Polymarket platform that they gained significant success. Notably, since the beginning of 2024, markets linked to the outcomes of the U.S. elections have attracted a considerable influx of investors, leading Polymarket to establish itself as a reference, and extending its influence beyond the confines of the cryptocurrency industry. To illustrate this, one can mention that by mid-2024, Bloomberg Terminal had incorporated Polymarket's probabilities for predicting the winner of the U.S. election. This resulted in a total
+
+
+4 The capital required for market-making is often supplied by the protocol itself. This enables Wintermute to gain exposure to the token's price at a reduced cost, while benefiting from leverage.
+5 A complete breakdown of options trading volume and market share can be found on The Block.
+
+volume of $8.7 billion in 2024.6 In addition to political topics, the platform also offers markets related to cryptocurrency prices, which are the focus of this paper.
+     The structure of a market that concerns the price of a cryptocurrency is analogous to that of a binary option. To illustrate this, consider a representative market: "Will Ether be above
+$3,500 on July 5, 2024?" In this scenario, the underlying asset is Ether, the strike price is
+$3,500, and the expiration date is July 5, 2024. Moreover, the use of the term "above" serves two distinct purposes. First, it confirms that this is a European-style option, as the focus is on the price at a specific moment in time. There are also American-style options, which focus on the price the underlying asset will reach over a given period. On the other hand, the terminology indicates that the "yes" outcome is equivalent to a call option, while the "no" outcome corresponds to a put option. Indeed, purchasing "yes" shares would imply a bet on the price exceeding the strike price at expiration, while acquiring "no" shares would suggest a bet on the price remaining below it. Similar to Deribit's vanilla options, these instruments are cash-settled. However, the settlement is made in dollars rather than units of the underlying asset. Finally, the binary nature of these options derives from the universe of their possible value at expiration, a characteristic we will further explore in the subsequent subsection.
+
+2.2. Payoffs Structure
+
+     After contextualizing and introducing the characteristics of vanilla and binary options, it is necessary to examine how their specific features affect their respective payoffs. We begin with the payoff of a European-style cryptocurrency vanilla option traded on Deribit. As previously discussed, there exists an inverse relationship between the value of the option at expiration and the price of the underlying asset. This relationship arises because the option is settled in units of the underlying asset, whose price fluctuates as the intrinsic value of the option increases or decreases. To illustrate this, consider the example of a vanilla call option with
+
+Bitcoin as the underlying asset, and a notional value
+
+N ?? denominated in BTC. This contract
+
+grants the holder the right to purchase one Bitcoin at strike price K, on the expiration date T. In the absence of transaction costs, the payoff at expiration is defined as follows:
+
+
+V ??(K, T ) = N ?? · max (ST - K,0)
+
+
+= N ?? · max
+
+K
+1 -	,0
+
+C	ST
+
+(	ST	)
+
+
+
+
+6 Data retrieved from The Block, available here.
+
+Similarly, the payoff structure of a put option at expiration is defined as:
+
+
+V ??(K, T ) = N ?? · max (K - ST ,0)
+
+
+= N ?? · max
+
+K
+- 1,0
+
+C	ST
+
+( ST	)
+
+
+It can be observed that the fact that the option is purchased and settled in units of the underlying asset creates an inverse relationship between its price and the intrinsic value of the option at expiration. This unique characteristic of cryptocurrency inverse options distinguishes their payoff structure from that of standard European vanilla options, which is typically a piecewise linear function of the underlying asset's price at expiration. Figure 1 provides a graphical representation of the payoff structure for inverse options, offering a clearer understanding of this inverse relationship on the ratio between the option's value at expiration and the price of the underlying asset. As the intrinsic value of the option increases, the rate of growth of the payoff expressed in units of the underlying asset diminishes, and vice versa.
+
+
+
+Figure 1 Inverse Vanilla Option Net Payoff
+This figure presents the net payoff of an inverse vanilla option against the underlying asset's price at expiration ST. For ease of comparison, it also represents the same payoff, but denominated in dollars. The area between the two functions illustrates the impact of the 1/ST factor, while the dollar value at expiration is the exact same for both.
+
+
+     It is important to examine how the inverse structure of Deribit options impacts their payoff when expressed in dollar terms. Consider the scenario of a holder of a European vanilla option expiring in-the-money. At expiration, the holder liquidates the entire notional amount received, measured in units of the underlying asset. The final payoff in dollars is thus obtained
+
+by multiplying the payoff by the underlying asset's price at expiration, denoted
+
+ST. In this
+
+context, the inverse relationship introduced by the 1/ST factor is effectively neutralized by this
+
+multiplication. As a result, the dollar-denominated payoff of a call option, represented as V $(K, T ), is expressed as N ?? · max (ST - K,0). This process restores the conventional structure of a vanilla option, which is a piecewise linear function of the underlying asset's price at expiration. This distinction is crucial, as our construction of the condition for a negative-free payoff will assume that the payoff is converted into dollars to ensure consistency with that of a Polymarket binary option. Moreover, this observation underscores the fundamental rationale behind inverse options, which aim to function independently of fiat currencies.
+     We now examine the payoff of a Polymarket binary option. To do so, we must first delve into the pricing and settlement mechanisms of these instruments. The price of a Polymarket option is measured in dollars, denoted as , where Pt ? [0,1]. At expiration, depending on the market outcome, the value of the option can take one of two states, such as V (K, T ) ? {0,1}. If the option held is correct upon resolution, its value is $1, otherwise, its value is $0. Consider a market based on Bitcoin's price relative to a strike price K at time T, similar to the example introduced earlier. In this market, the "yes" option is equivalent to a binary call option, with its price represented as PC,t(K, T ). In the absence of transaction costs, the payoff at expiration can
+be expressed as follows:
+
+
+VC(K, T ) =
+
+1  if ST > K
+{0  otherwise
+
+
+This payoff structure is characterized by its binary nature, resulting in two distinct and mutually exclusive outcomes. Such a framework differentiates these options from European vanilla options, offering an alternative well-suited to prediction markets. It is essential to emphasize that, since these instruments are settled in dollars, there is no inverse relationship between the intrinsic value of the option and the price of the underlying asset. Figure 2 graphically represents the payoff of a Polymarket binary option as a function of the underlying asset's price at expiration. While the piecewise linear function principle of vanilla options is preserved, the key difference lies in the fact that, above and below the strike price, the option's value remains constant. Additionally, the payoff structure exhibits an interesting property: the areas under the curve for prices below and above the strike price are complementary. This arises from the fact that the payoff in the event of a positive resolution is complementary to the price paid for the option.7
+
+7 Considering the cost of the option, the integral of the payoff function over the range where it is negative always corresponds to the premium paid. Conversely, the integral over the range where the payoff is positive equals the difference between the maximum payoff (1) and the premium.
+
+
+Figure 2 Prediction Markets Binary Options Net Payoff
+This figure illustrates the net payoff of a prediction markets binary call option as a function of the underlying
+
+asset's price at expiration ST. This instrument has only two possible values at expiration, which are -
+The payoff structure for a binary put option is similar, except that the two value intervals are reversed.
+
+or 1 - P.
+
+
+
+As a point of reference, it is important to highlight that Polymarket binary options are a type of cash-or-nothing option, which provide a fixed payoff within a defined range and hold no value outside that range. These instruments are frequently employed by companies to hedge against specific financial thresholds to which they are exposed. Furthermore, they are closely associated with structured financial products known as digital options, which are widely utilized in traditional financial markets. These digital products can integrate multiple binary options to design a customized payoff structure suited to particular needs and circumstances.
+
+
+3. Arbitrage in Vanilla-Binary Options
+
+     In this section, we present our central thesis, namely that a negative-free payoff can be achieved through the combination of vanilla and binary options. We then develop the necessary and sufficient condition for the existence of an arbitrage opportunity, providing the theoretical foundation for a systematic strategy to capitalize on such opportunities. Finally, we identify a critical variable required for the practical implementation of this strategy.
+
+3.1. Thesis on a Negative-Free Payoff
+
+     Most arbitrage strategies involving multiple options rely on combinations of European vanilla options. In this study, we examine two types of options that share similar characteristics
+
+but whose interactions are rarely, if ever, considered. The distinctive payoff structure of binary options enables the exploration of novel combinations that differ from traditional approaches employed in the cryptocurrency market. Building on this, we hypothesize that it is possible to structure a negative-free payoff by combining European vanilla options on the one hand and prediction market binary options on the other. We define a negative-free payoff as one that remains non-negative regardless of the price of the underlying asset at expiration. Furthermore, for this concept to hold economic rationale, this notion implies that the payoff is positive within a certain range of underlying asset values. This definition inherently accounts for the portfolio's formation cost, including both the price of the instruments and transaction fees. Under such conditions, this payoff structure qualifies as an arbitrage opportunity.
+     Intuitively, we construct the portfolio around a vanilla option, as it offers the greatest upside potential in the event of a favorable movement in the underlying asset's price. Consider a European-style vanilla call option, priced at P. For different values of the underlying asset at expiration, the payoff of this option is expressed as follows:
+
+• If ST < K : the payoff is constant and negative, equivalent to the option cost - .
+• If K < ST < K + P : the payoff is negative and increases linearly.
+• If K + P < ST : the payoff is positive and increases linearly.
+
+For a call option, the payoff remains negative as long as the underlying asset's price is below the sum of the strike price and the premium. Given the characteristics of binary options, one could envision a scenario where the losses from the vanilla option are offset by the binary option. To achieve this, it is necessary that when ST < K + P, the payoff of the binary option equals or exceeds the premium paid for the vanilla option P. For example, consider a binary put option with a strike price and expiration identical to those of the vanilla call option. Since this binary option has an opposite direction to that of the vanilla option, acquiring a sufficient quantity of these options can effectively counterbalance the losses incurred from the vanilla option.
+     This assumption, however, overlooks a critical mechanism. By purchasing binary put options, we are exposed to potential losses when ST > K.8 In this case, it is not guaranteed that the payoff of the vanilla option will fully offset these losses. Therefore, it is also necessary that the losses from the binary options are compensated by the gains from the vanilla option for all values of the underlying asset within the interval [K, + 8). In other words, it must be the case that when the underlying asset is at the strike price of the binary options, the payoff of the
+8 Assuming a combinaison of vanilla call options and binary put options.
+
+Long Portfolio
+KV	KB
+Short Portfolio
+KB	KV
+Figure 3 Vanilla-Binary Arbitrage Portfolio Net Payoff
+This figure represents the theoretical net negative-free payoff of a vanilla-binary options portfolio as a function of
+
+the underlying asset's price at expiration
+
+ST. It also depicts both directions of the trade (call and put) and
+
+decomposes the individual payoffs of the two legs. The strike price of the vanilla option is denoted as KV, while that of the binary option is denoted as KB. The strike price boundaries are derived using the arbitrage condition.
+
+
+vanilla option is greater than or equal to the sum of the premiums paid for both options. To achieve this, we must ensure that the strike price of the vanilla option is sufficiently distant from that of the binary options. Under this configuration, regardless of the value of the underlying asset, the combined payoff is never negative, qualifying it as a negative-free payoff. While this scenario is illustrated using a vanilla call option and binary put options, the principle applies analogously to the inverse configuration with a vanilla put option and binary call options.
+     Figure 3 depicts the payoff of each leg and their combined payoff for the two possible directions of our arbitrage. Several observations can be made regarding the value of the payoff as a function of the underlying asset's price. First, the combined payoff mirrors the general shape of a traditional vanilla option payoff, except within the price interval between the two strike prices. This implies that, although our payoff is negative-free, a directional movement in
+
+the underlying asset's price is still required to generate a positive return. We could further note that the vanilla option benefits from volatility, while the binary option benefits from stability. Another interesting observation is that, intuitively, we assume that the interval between the two strike prices holds the highest expected value for our trade. Indeed, while it does not require an excessive movement of the underlying asset's price, it is the only interval in which both legs have a positive payoff. Finally, it is noteworthy that the manner in which the vanilla option offsets the binary options' losses closely resembles how market makers hedge digital option exposures. Although this parallel does not fundamentally impact our trade, it demonstrates consistency with institutional practices regarding such instruments.
+
+3.2. Arbitrage Conditions
+
+     We now need to establish the necessary condition for creating a negative-free payoff composed of vanilla and binary options. This condition forms the cornerstone of our arbitrage strategy. Prior to this, we must consider the fixed parameters that each option contract must adhere to. First, it is required that both the vanilla option and the binary options share the same underlying asset and expiration date. The former is relatively straightforward, but the latter also plays a crucial role. A misalignment could introduce fluctuations in the underlying asset's price during the time interval between the expiration of the two options, thereby undermining the integrity of the negative-free payoff structure. Another essential factor to consider is the type of options employed. Since Deribit options are of the European style, we must restrict our consideration to Polymarket options of the same style. As previously mentioned, these prediction-market-based options derive their value from the relative price of an underlying asset at a specified point in time rather than over a continuous interval.
+     With the fixed parameters of each option defined, we should now focus on the arbitrage condition. The primary objective of this trade is to combine vanilla and binary options in such a way that their payoffs offset each other, while preserving the potential for significant upside. As discussed earlier, this configuration is only possible under two conditions. First, the quantity of binary options purchased must be sufficient to cover the premium of the vanilla option in the event that the latter expires out-of-the-money. Second, the difference between the strike prices of the two options must exceed a minimum threshold, ensuring that the vanilla option can offset the cumulative premium of the binary options in the event they expire out-of-the-money. By combining these two conditions, we derive the fundamental arbitrage condition.
+
+     We shall now address the first condition, which pertains to the coverage of the vanilla option. The objective is to determine the precise quantity of binary options required to offset its
+premium.9 Given that, in the event the vanilla option expires out-of-the-money, the binary
+options expire in-the-money, it suffices to compare the premium of the former with the potential
+
+profit of the latter. For a specified quantity of vanilla options
+
+QV purchased at a price PV,
+
+incurring transaction fees F, and a binary option price PB, the quantity of binary options QB
+required to provide coverage is defined such that:
+
+Q = QV (PV + F )
+B	1 - PB
+
+By satisfying this condition, it can be assumed that, for any value of the underlying asset at expiration, the negative payoff of the vanilla option will be covered by that of the binary options. Note that the payoff of the binary options is represented as 1 - PB, as in this situation, it denotes the difference between their premia and their intrinsic value at expiration.
+     Next, we define the second condition, which addresses the coverage of the binary options' payoff. The objective is to determine the minimum required difference between the strike price of the vanilla option KV, and that of the binary options KB, to offset the payoff of the latter. Unlike the previous condition, the result of this condition should yield a threshold value rather than an absolute one. Moreover, as previously highlighted, the differential between the two strike prices varies depending on whether the vanilla option is a call and the binary option is a put, or vice versa. Consider a vanilla call option combined with binary put options, the condition is established as follows:
+
+KB - KV = PV QV + PB QB  ?  KV = KB - (PV QV + PB QB)
+Conversely, for a vanilla put option paired with a binary call option, the condition is formulated as follows:
+
+KV - KB = PV QV + PB QB ? KV = KB + PV QV + PB QB
+As with the first condition, it can be assumed that if the second condition is met, the payoff of the binary options will be fully offset by that of the vanilla option. Note that the formula is deliberately expressed as a function of the vanilla option's strike price KV. This formulation reflects the structural constraint imposed by prediction markets, which limit the binary option's
+
+9 Since the maximum payoff of a binary option is $1, it is typically necessary to purchase multiple contracts.
+
+strike price to predefined values. Thus, only the strike price of the vanilla option remains adjustable. The expression of this condition incorporates this particular characteristic.
+     Having established the two necessary conditions for implementing the arbitrage, we can now derive a unified condition that simultaneously ensures the coverage of both the vanilla option and the binary options. This unified condition serves as the foundation for verifying the possibility of creating a portfolio with a negative-free payoff. To do so, we begin with the second condition and substitute the quantity of binary options, QB, with its formula as defined in the first condition. The unified condition can thus be expressed as follows:
+
+
+KV = KB -
+
+QV PV + PB
+(
+
+QV PV
+
+
+( 1 - PB ))
+
+? K  = K  -  QV PV
+1 - PB
+
+if KB < St
+
+KV = KB + QV PV + PB
+
+QV PV
+
+
+( 1 - PB )
+
+? K  = K  +  QV PV
+1 - PB
+
+
+otherwise
+
+
+
+For any combination of vanilla and binary options satisfying this condition, a portfolio with a negative-free payoff can be structured. Furthermore, an observation can be made: this formula is particularly sensitive to two variables, namely the prices of the two options. Specifically, lower option prices expand the range of strike prices for the vanilla option that satisfies the condition. In scenarios where arbitrage is not feasible, the price ratio between the two options is balanced such that the condition cannot be fulfilled. As a result, beyond facilitating the practical construction of an arbitrage strategy, this condition also provides a useful benchmark for determining the no-arbitrage pricing of prediction market binary options.10
+
+3.3. Combined Moneyness Probability
+
+     In the first part of this section, we discussed that the payoff structure of our arbitrage suggests that the interval between the two strike prices offers the highest expected value. This concept holds particular relevance in the construction of a strategy, as it enables the identification of, among several configurations of options satisfying the arbitrage condition, the one that yields the highest expected value at expiration. In practical terms, this approach maximizes the payoff of each trade but also minimizes the strategy's carrying cost.
+
+
+10 Given that the fulfilment of this condition ensures the existence of an arbitrage opportunity, it follows that as long as the values remain within the range it defines, no such arbitrage can occur.
+
+     To determine the combination of options with the highest expected value at expiration, it is essential to identify the underlying price at which this value peaks, as illustrated by the combined payoff in Figure 3. Intuitively, we observe that this maximum is achieved when both options expire in-the-money, which occurs when the underlying price lies within the interval
+defined as ST ? [KV, KB]. While there are values of ST outside this interval that result in a
+higher total payoff, reaching these price levels requires substantially greater price variation of the underlying asset before expiration. Conversely, there are values outside this interval that necessitate lower variance in the underlying price but yield a total payoff of zero.11 Consequently, it seems appropriate to consider that when the spot price lies within the interval defined above at expiration, the expected value of the trade is within its optimal range.
+     Next, we need to define how to calculate the probability that a combination of vanilla and binary options will both expire in-the-money, ensuring that the spot price lies within the interval where the expected value is highest. To do so, we rely on the probability measure associated with each type of option. Regarding prediction market binary options, the implied probability is directly reflected in their price. For example, if an option is priced at $0.70, this indicates that market participants collectively estimate a 70% chance of it expiring in-the-money. As demonstrated by Wolfers and Zitzewitz (2006), while certain biases may affect this probability,
+the price generally reflects the collective market sentiment, which justifies its use as such.12 For
+vanilla options, their delta is used as an approximation of the probability of expiring in-the- money. Although this measure is not theoretically exact, it is commonly employed by traders for this purpose.13 The combined probability can then be expressed as follows:
+
+PITM (V n B) = ?V · PB
+
+This formula captures the combined probability that both the vanilla option and the binary option  will expire in-the-money, as implied by the delta of the vanilla option ?V and the price of the binary option PB. It is important to highlight that this method does not directly contribute to the construction of a negative-free payoff. Instead, it serves as a tool to help identify the most
+relevant option combinations for the arbitrage strategy. Its value lies purely in practical application, which is why it relies on data and measures widely used by market practitioners.
+
+
+
+
+11 As shown in Figure 3, the minimum absolute price fluctuation required for a positive payoff is
+
+KV - St | .
+
+12 Polymarket also treats the price of a binary option as the probability of the corresponding outcome occurring.
+13 An option with a delta close to 0 typically has a low implied probability of expiring in-the-money, while one with a delta near 1 has a high probability. Options with a spot near the strike generally have a delta around 0.5.
+
+4. Data and Methodology
+
+     In this section, we introduce the dataset employed to evaluate the effectiveness of our strategy that will be discussed in the subsequent section. This comprises two primary components, which are market data and option-specific data. Furthermore, we provide a comprehensive explanation of the methodology employed to aggregate and process these data when necessary, along with guidance on their interpretation.
+
+4.1. Market Data
+
+     We refer to market data as all information pertaining to the prices of the financial instruments under analysis. These data are essential for evaluating the performance of a strategy constructed in alignment with our proposed unified condition. Specifically, we focus on daily price observations at 08:00 UTC, since this is the expiration time for the options. To ensure accurate representation of price and liquidity dynamics, we employ a methodology designed to reflect market realities as closely as possible. The data are sourced exclusively from the APIs of the exchanges offering vanilla and binary options, guaranteeing precision and reliability. In this study, these exchanges are Deribit and Polymarket. Finally, note that the process for constructing the arbitrage strategy, detailed in the subsequent section, is entirely independent of this dataset and is grounded solely on the theoretical framework developed thus far.
+     To begin, we look at the spot price, which is used to determine several parameters of our trade, such as the direction of each option and the dollar-denominated price of vanilla options quoted in terms of the underlying asset. For this purpose, we use the BTC/USDC trading pair
+on Deribit as the reference instrument.14 This pair is preferred over its USDT counterpart
+because Circle's dollars stablecoin, explicitly designed for institutional use, has historically demonstrated greater price stability. To determine the spot price at 08:00 UTC, we retrieve minute-level price data spanning the 30-minute interval from 07:45 UTC to 08:15 UTC and
+calculate the volume-weighted average price (VWAP).15 This approach provides a more
+representative value of the executable price, as it accounts not only for price fluctuations but also for the trading volumes associated with those price levels.
+
+
+14 Historical data for this pair is available on Deribit.
+15 The volume-weighted average price is calculated by dividing the sum of the products of the prices and volumes of each transaction by the total sum of the volumes of the transactions.
+
+     Next, we turn to the data for vanilla options. First, we retrieve all vanilla options that have been available for trading on Deribit. For each of these options, we collect its key contract parameters, including the underlying asset, the direction (call or put), the strike price, and the expiration date. Additionally, we compile the daily price of the option at 08:00 UTC throughout its lifespan. To achieve this, similar to the method used for the spot price, we aggregate minute- by-minute option prices over the interval from 07:45 UTC to 08:15 UTC. However, in this case, two distinct methods are employed to calculate the final price. If the trading volume of the option during the observed interval is sufficiently high, we compute a VWAP based on the execution prices of all transactions. Conversely, if the trading volume is insufficient, we calculate the arithmetic mean of the option's mark prices during the interval. This dual approach enables us to define an accurate option price regardless of market conditions.
+     Lastly, we outline the process of aggregating binary options data. To begin, we gather all prediction markets associated with the price of Bitcoin or Ether. These markets are then filtered to include only those that target the price of either asset at a specific date, rather than within a range. This filtering process results in a list of markets structured as European-style binary options. For each of these options, we extract the contract parameters, which are identical to those of vanilla options. Finally, we retrieve the option's value minute by minute over an extended observation period, from 06:00 UTC to 10:00 UTC, applying the same price calculation methodology as for vanilla options. The reason for considering a broader observation window is that Polymarket's prediction markets occasionally experience unstable trading volumes. By extending the observation period, we ensure that the calculated price is more reflective of market conditions and trading realities.16
+
+4.2. Vanilla Option Delta
+
+     When constructing our vanilla-binary options arbitrage strategy in the following section, we incorporate data extending beyond the parameters of option contracts or their market prices. Since our strategy is built around options, particularly vanilla options, it inherently interacts with the underlying mechanisms of these instruments, commonly referred to as the Greeks. Specifically, we focus on the delta of vanilla options as part of defining the combined probability of expiration in-the-money. This measure enables us to compare the expected value of various option combinations, as outlined in the previous section.
+
+16 All data used to backtest our strategy is available upon request.
+
+     To calculate the delta of the cryptocurrency options considered in our strategy, we rely on the model commonly used for pricing these instruments: the Black-76 model. This model is derived from the Black-Scholes framework and is specifically tailored to evaluate options on futures contracts, such as the vanilla options traded on Deribit. Its distinguishing feature is the assumption that the underlying asset is a futures contract that does not pay dividends, aligning with the mechanisms of cryptocurrencies.17 In fact, this is the model used by Deribit to compute the Greeks for the options listed on its platform.18 Therefore, it provides an appropriate basis for deriving the delta in our strategy. For a combination of vanilla calls and binary puts, the delta is defined as follows:
+
+?C = e-rT N(d1)
+{?P = - e-rT N(-d1)
+
+Here, e-rT denotes the discount factor accounting for the risk-free interest rate r, over the period
+
+until expiration T. Additionally,
+
+N(d1) represents the cumulative distribution function of the
+
+standard normal distribution applied to d1. The term d1 itself is defined as follows:
+
+
+F
+ln	+
+
+s 2T
+
+d1 =   ( K )	2 
+s
+
+In this formula, F represents the price of the underlying futures contract, which is the futures with an expiration date matching that of the option, while K is the strike price. The variable is the implied volatility of the underlying futures. As in the traditional Black-Scholes model, sigma is determined by solving the pricing equation to match the price of the option.
+     Thus, based on the futures price, the strike price, the risk-free interest rate, the time to expiration, and the implied volatility, we are able to derive the delta of Deribit's vanilla options. However, several methodological clarifications must be made. First, the price of the underlying futures is obtained using the same methodology applied to the spot price, as these two instruments exhibit comparable trading characteristics.19 Second, in its implementation of the pricing model, Deribit assumes the risk-free interest rate to be zero. In order to remain
+
+17 The Black-76 model was originally introduced by Black (1976) to price commodity derivatives. In the case of crypto options, pricing is typically based on the futures price rather than the spot price, as these contracts provide a more liquid instrument, mitigating spot market inefficiencies and facilitating arbitrage-free valuation.
+18 A complete breakdown of Deribit's pricing methodology is available here.
+19 The methodology is detailed in Section 4.1.
+
+consistent with industry standards and the platform's methodology, we adopt the same assumption. Note that this parameter does not influence the efficacy of our strategy, as the delta of an option will solely be used in relative comparison to the delta of another option. Indeed, since the first term in the delta equation remains constant across different vanilla options with the same underlying futures and expiration date, comparing their delta values is equivalent to comparing their respective d1 values.20
+
+5. Strategy and Empirical Results
+
+     In this section, we begin by delineating the assumptions and rules underlying our arbitrage strategy. Then, we empirically test its performance relative to a set of relevant indicators, including a specific breakdown of the performance metrics.21 Finally, we engage in a discussion of the results obtained and highlight the key factors driving the arbitrage mechanism.
+
+5.1. Vanilla-Binary Options Arbitrage Strategy
+
+     Thus far, this paper has primarily focused on the theoretical framework underpinning vanilla-binary options arbitrage and the derivation of the condition necessary to construct a portfolio with a negative-free payoff. To better assess its practical applicability, we propose an arbitrage strategy designed to exploit pricing inconsistencies between vanilla and binary options. This strategy is based on a relatively straightforward principle. It systematically evaluates all available vanilla and binary options at any given moment and verifies whether their combination satisfies the derived condition for structuring a negative-free payoff. When this condition is met, then an arbitrage opportunity exists, and the strategy capitalizes on this by taking long positions in the options until their expiration. Prior to detailing the specific rules for its implementation, we must present the two assumptions upon which it is built. The first assumption posits that, upon the expiration of the vanilla option, the realized value of its payoff is automatically converted into dollars. As mentioned in Section 2, this assumption simplifies the payoff structure of inverse vanilla options, thereby facilitating the evaluation of the strategy's performance. The second assumption is that the analysis of daily data and the
+
+20 This is carried out through an iterative process, using the Newton-Raphson method, which approximates the implied volatility by repeatedly refining estimates until the option price converges to the market price.
+21 The algorithms are written in Node.js, and a repository for real-time arbitrage detection is available here.
+
+associated decision-making process are confined to a specific and narrow time window, namely 08:00 UTC. When considering a systematic application of the strategy, this assumption introduces no practical limitations to the execution of the strategy.
+     We now establish the rules of our strategy, particularly focusing on its decision-making system. To begin with, due to the relatively limited availability of binary options on Polymarket compared to vanilla options on Deribit, and the inability to customize their expiration dates or strike prices, binary options serve as our reference point. Each day, at 08:00 UTC, we retrieve all available European-style binary options listed on Polymarket. For each of these options, the decision-making process follows the same procedure. First, we determine the direction of the two legs of the trade. If the strike price is lower than the spot price of the underlying asset, the binary option is considered a put and the vanilla option should be a call, and vice versa. Next, we aggregate all available vanilla options with the same expiration date as the binary option, as well as the appropriate direction. This results in a list of potential combinations of binary and vanilla options. Subsequently, we test each combination against the condition for forming a negative-free payoff. If only one combination satisfies the condition, we take long positions in both the binary and vanilla options. However, if multiple combinations satisfy the condition, we take a long position in the combination with the highest combined probability of expiring in- the-money PITM (V n B), as defined earlier. Any positions taken are systematically held until the expiration of both options. Naturally, if no combination satisfies the condition, no trade is initiated. This process is repeated daily for each binary option available on Polymarket.
+     This strategy and its corresponding decision-making process are deliberately designed to be straightforward and devoid of unnecessary complexities. Its primary objective is to evaluate all possible combinations of vanilla and binary options that can be simultaneously traded for a given expiration date. Our condition for constructing a negative-free payoff then serves to identify arbitrage opportunities and ensures that the combined payoff is never negative at expiration. Considering all portfolio formation costs and the cumulative payoff from both legs of the trade, the net payoff at expiration can be formalized. For a combination of vanilla calls and binary puts, it is expressed as follows:
+
+
+$  = QV
+
+(max (ST - KV; 0) - PV)
+
++ QP (E - PB)
+
+
+In this formulation, the net payoff of our trade measured in dollars V $ , corresponds to the
+CP
+cumulative payoff of the two trade legs. The first term of the equation corresponds to the payoff
+
+of the vanilla call options, while the second term represents the payoff of the binary put options. The notation for the gross payoff of the binary option has been replaced by E for clarity, but it is still true that E ? {0,1}, with its value being determined by the outcome of the prediction market. For the inverse trade direction, the net payoff at expiration is defined as:
+
+
+$  = QV
+
+(max (KV - ST; 0) - PV)
+
++ QP (E - PB)
+
+
+These two formulas enable the calculation of the dollar-denominated realized profit at expiration for each trade taken by our strategy. They are particularly important in practice for measuring the returns of the portfolio, but also in theory, to ensure that our condition indeed allows for the construction of a negative-free payoff when verified.
+
+5.2. Results and Performance
+
+     To evaluate the empirical performance of our strategy, we apply it to historical data for Bitcoin and Ether, as outlined in Section 4. The observation period spans from June 1, 2023, to December 31, 2024, covering a total of 580 days. It would have been preferable for this period to be longer, but the lack of volume in the prediction markets prior to these dates would have hindered its practical implementation. The primary objective of this empirical evaluation is to assess the practical value of our condition for constructing a negative-free payoff, and to determine its relevance within an arbitrage strategy. To achieve this, we must determine an appropriate methodology for performance measurement. Indeed, unlike discretionary or statistical strategies, pure arbitrage strategies such as ours exhibit two distinctive characteristics. On the one hand, their return is expected to never be negative, and on the other, their frequency of occurrence tends to be relatively low, except in certain high-frequency trading scenarios. In this case, these characteristics are the ones sought in our strategy. These unique attributes are central to its implementation and must therefore inform the evaluation framework.
+     We begin by evaluating our strategy on an annualized basis in order to facilitate comparison with existing strategies. Given that our approach is grounded in a no-arbitrage condition and assumes a relatively low frequency of occurrence, we follow the annualization method of Lucca and Moench (2015), which considers a strategy that is active only on the dates of the Federal Open Market Committee (FOMC) announcements. We calculate the average daily returns and scale it by the number of days on which the strategy is active within a year, expressed as µa = µ Na. Similarly, we annualize the negative volatility, defined as sa = s  Na,
+
+
+
+Table 1 Annualized Performance of Vanilla-Binary Arbitrage Strategy
+This table presents the risk-adjusted returns (%), downside volatility (%), median returns (%), maximum drawdown (%), rho correlation to the underlying asset, active percentages (%), average open-to-close time (days), and the total number of observation periods (days). The risk-free rate is assumed to be 1350 bps.
+
+
+where only the volatility of negative returns is considered. Focusing on negative volatility provides a more precise representation of the risk inherent in our strategy, as it is explicitly designed to avoid losses. Overall, since we systematically hold the options until expiration, volatility is not a central indicator. Additionally, we measure several other metrics that provide a deeper understanding of the behavior of our strategy over time. These include the proportion of active trading days compared to the total observation period and the average holding duration.
+     Table 1 presents the annualized performance metrics of our strategy for Bitcoin and Ether. The overall returns achieved are remarkably solid, even for cryptocurrency markets. For instance, a cash-and-carry trade on Bitcoin typically generates risk-adjusted returns of approximately 20%. However, our strategy is active during only 6.71% of the periods on average, which is a small proportion. This low activity rate highlights the infrequency of arbitrage opportunities, which materialize only a few times per year. Nevertheless, when such opportunities do arise, they result in significant profitability. These findings are consistent with the characteristics of pure arbitrage, as outlined earlier. Moreover, the negative volatility remains within an acceptable range, particularly for Bitcoin. Overall, the annualized performance is very strong, demonstrating the robustness of our trading strategy.
+     In general, the traditional method of assessing performance on an annualized basis proves somewhat inadequate in addressing the unique aspects of pure arbitrage strategies. Given the low frequency of opportunities, it seems more relevant to analyze performance on a per-trade basis rather than on an annual basis. This approach aligns with practices commonly used by industry professionals. Considering the fact that our approach is based on the construction of a
+
+
+
+Table 2 Per-Trade Performance of Vanilla-Binary Arbitrage Strategy
+This table details the strategy's performance on a per-trade basis. It reports the average return per trade (%), decomposed into vanilla legs (%) and binary legs (%). It also includes return volatility (%), variance (%), and the number of losing trades, which is always equal to zero. Additionally, the table provides the arbitrage frequency (%), profit rate (%), skewness, and kurtosis of trade returns. The risk-free rate is assumed to be 1350 bps.
+
+
+negative-free payoff, we expect, on the one hand, that no trade will generate a negative return, and on the other, that certain trades will produce significantly positive outcomes.
+     Table 2 provides a detailed analysis of our strategy's performance on a trade-by-trade basis. The most notable observation is that no trade resulted in a negative net payoff, which confirms our initial expectation. This finding also underscores the effectiveness of our unique payoff condition. Furthermore, while arbitrage opportunities on Bitcoin generally yield higher average payoffs, they occur less frequently than those on Ether, which explains their relatively lower annualized return. This aligns with the observations made by Makarov and Schoar (2020) regarding the greater efficiency of the Bitcoin market compared to other major crypto-assets. The frequency of arbitrage opportunities is quite low, with only 25.4% of the available binary options during the period being employed in trades. Of these trades, approximately one in four results in a profit, with the remainder yielding neutral returns. Additionally, the high kurtosis and skewness of the return distribution further confirm the presence of significant outliers and asymmetrical payoffs, reinforcing the sporadic nature of the arbitrage opportunities observed.
+     These various performance measures of our strategy demonstrate the practical value of our underlying theory, from which the condition for structuring a negative-free payoff is derived. On the one hand, it effectively limits losses to neutrality, and on the other, it generates significant returns when the underlying asset's directional dynamic is favorable. Although the frequency of arbitrage is not particularly high, the strategy's robustness allows exposure to the price movements of Bitcoin and Ether, while fully mitigating potential losses.
+
+5.3. Determinants of Arbitrage
+
+     In order to fully understand the outcomes of our strategy, it is essential to discuss the key factors that influence its performance. By this term, we refer to all elements that can significantly impact its results, either positively or negatively. In other words, it involves, on the one hand, understanding the variables that influence the frequency of arbitrage opportunities between vanilla and binary options, and, on the other hand, identifying the elements that affect the performance of each trade. This inquiry is important, as it helps to better assess the potential for improvement and the limitations of our strategy. This is all the more relevant given that we have deliberately kept the strategy simple and straightforward, to evaluate the empirical value of our unified condition in its most fundamental form. Additionally, this approach provides a framework for potential adjustments aimed at enhancing absolute and relative performance.
+     With respect to the frequency of arbitrage opportunities, one notable factor we highlight is the low density of the prediction market offering on Polymarket. During the observed period, only 44 European-style Bitcoin binary options were available for trading on the platform. This represents approximately half the number of vanilla options available on Deribit for a single expiration date. This limited supply significantly constrains our strategy, as it reduces the opportunities for arbitrage. In Table 1, the difference between the annualized daily return and the return per trade clearly illustrates this observation. While the latter is based on the absolute return of each trade, the former takes into account the number of days the strategy is active, and as a result, is affected by those days when no opportunities arise. Another element to consider is the granularity of the strategy's decision-making process. Currently, it evaluates the arbitrage every 24 hours, at 08:00 UTC. Increasing the frequency of observations would likely enable the strategy to capture more short-lived pricing inconsistencies, thus increasing the number of opportunities. This is particularly relevant for binary options, whose prices can experience intense and short-lived fluctuations, thereby creating potential pricing inconsistencies.
+     Regarding the performance of individual trades, a key observation can be made. As illustrated by the structure of our negative-free payoff at expiration, the return generated primarily derives from the underlying asset's price at expiration. Unlike traditional arbitrage strategies such as put-call parity, this one is inherently directional. In fact, when combined, the two legs of the trade form a zero premium vanilla option, but with a constrained strike price. Therefore, the trade-off in constructing a negative-free payoff with a theoretically unlimited positive upside is that we are not guaranteed to yield a return. For instance, among the 24 trades
+
+executed by our strategy on Bitcoin and Ether, only 6 resulted in distinctly positive returns, which represents 25%. Although we cannot control the underlying asset's price, it is certainly possible to improve this ratio. For example, we could use the combined in-the-money expiration probability index to set a minimum threshold, thus reducing capital allocation to opportunities with higher expected value. Additionally, position sizing could be adjusted for each trade based on this probability, further optimizing the strategy's efficiency. In essence, by building upon the theoretical foundation defined in this paper and considering the key performance determinants, this strategy can be significantly enhanced to improve its overall effectiveness.
+
+
+6. Conclusion
+
+     This paper explores cryptocurrency options arbitrage, particularly a novel approach that combines vanilla options and prediction market binary options. The objective of this approach is to exploit pricing discrepancies between these two types of instruments, enabling the structuration of a portfolio with a negative-free payoff at expiration. If such a scenario occurs, an arbitrage opportunity arises. Our study is particularly motivated by the fact that cryptocurrency markets present numerous such opportunities due to the diversity of participants involved and the low standardization in pricing methods for certain instruments.
+     To begin, this paper provides a comprehensive presentation of the underlying mechanisms of inverse vanilla options denominated in units of the underlying asset, as well as prediction market binary options. Specifically, it outlines the parameters of these option contracts, as well as the structure of their individual and combined payoffs. Understanding their mechanics and specificities is an essential prerequisite for their effective application in trading strategies. This is particularly relevant in the cryptocurrency asset class, whose characteristics often diverge from those of traditional asset classes, as illustrated by the inverse relation of options.
+     Subsequently, this paper introduces our thesis concerning the possibility of constructing a negative-free payoff by combining the two types of options under study. We demonstrate that this arbitrage is theoretically achievable and derive the unified condition for its formation. This condition contributes to laying the theoretical foundations of cryptocurrency vanilla-binary options arbitrage by providing a systematic method for its identification. Furthermore, the unified condition serves as a relevant benchmark for binary option pricing relative to vanilla options. It lays the groundwork for a potential parity principle between the two.
+
+     Finally, the practical implications of this hypothesis and the derived unified condition are empirically tested on the Bitcoin and Ether markets. For this purpose, we construct a straightforward strategy to exploit mispricings. Over the observed period, the strategy proves highly profitable, despite the relatively low frequency of arbitrage opportunities. As expected, none of the executed trades result in a loss, while several generate substantial gains. These findings demonstrate, on the one hand, the theoretical validity of the vanilla-binary options arbitrage condition and, on the other, the practical value of its application within an arbitrage strategy. Additionally, they provide compelling evidence of the persistent inefficiencies in cryptocurrency markets, underscoring the untapped potential for innovative arbitrage strategies in this evolving asset class.
+
+References
+
+Alexander, C., Chen, X., Deng, J., Wang, T. , 2024. Arbitrage opportunities and efficiency test in crypto derivatives. Journal of Financial Markets, 71, 100930.
+
+Alexander, C., Chen, D., Imeraj, A., 2024. Inverse and quanto inverse options in a Black- Scholes world. Working paper.
+
+Alexander, C., Deng, J., Feng, J., Wan, H., 2023. Net buying pressure and the information in bitcoin option trades. Journal of Financial Markets, 63, 100764.
+
+Berg, J., Forsythe, R., Nelson, F., Rietz, T., 2001. Results from a dozen years of election futures markets research. Handbook of Experimental Economics Results, Vol. 1.
+
+Black, F., 1976. The pricing of commodity contracts. Journal of financial economics, 3(1), 167-179.
+
+Cretarola, A., Figà-Talamanca, G., Patacca, M., 2020. Market attention and Bitcoin price modeling: theory, estimation and option pricing. Decisions in Economics and Finance, 43(1), 187-228.
+
+Hou, A. J., Wang, W., Chen, H., Härdle, W. K., 2020. Pricing cryptocurrency options. Journal of Financial Econometrics, 18 (2), 250-279.
+
+Hu, Y., Rachev, S. T., Fabozzi, F. J., 2019. Modelling crypto asset price dynamics, optimal crypto portfolio, and crypto option valuation. The Journal of Alternative Investments, 24, 133-143.
+
+John, K., Li, J., Liu, R., 2024. Pricing and arbitrage across 80 cryptocurrency exchanges. Available at SSRN 4816710.
+
+Kroeger, A., Sarkar, A., 2017. The law of one bitcoin price. The Federal Reserve Bank of Philadelphia.
+
+Lucca, D. O., Moench, E., 2015. The pre-fomc announcement drift. The Journal of finance, 70(1), 329-371.
+
+Makarov, I., Schoar, A., 2020. Trading and arbitrage in cryptocurrency markets. Journal of Financial Economics, 135(2), 293-319.
+
+Režábek, P., 2024. Analysis of prediction markets in crypto: investigating convergence in time, volatility, and biases in Polymarket.
+
+Schmeling, M., Schrimpf, A., Todorov, K., 2023. Crypto carry. Bank for International Settlements, 1087.
+
+Wolfers, J., Zitzewitz, E., 2006. Interpreting prediction market prices as probabilities. Working paper. NBER.
+
+Zulfiqar, N., Gulzar, S., 2021. Implied volatility estimation of bitcoin options and the stylized facts of option pricing. Financial Innovation, 7(1), 67.
+
+
